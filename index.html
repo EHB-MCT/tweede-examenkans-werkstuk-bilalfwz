@@ -1,16 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Eindopdracht</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./styles/index.css">
-  </head>
-  <body>
-    <main>
-      <div id="container">
-        
-      </div>
-    </main>
-    <script type="module" src="./js/index.js"></script>
-  </body>
+
+<head>
+  <title>Eindopdracht</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./styles/index.css">
+  <script type="module" src="./js/index.js"></script>
+</head>
+
+<body>
+  <h1>search article</h1>
+
+  <main>
+    <form id="form">
+
+      <label>
+        Article Name
+        <input id="searchBar" type="text">
+      </label>
+
+    </form>
+    <h1>Display Radio Buttons</h1>
+
+    <form id="likeForm">
+      <p>Search by Like</p>
+        <input type="radio" id="mostLike" name="Likes" value="mostLike">
+        <label for="mostLike">Most Like</label><br>
+        <input type="radio" id="minLike" name="Likes" value="minLike">
+        <label for="minLike">Min Like</label><br>
+       
+
+    </form>
+    <br>
+    <p id="loading"></p>
+    <p id="error"></p>
+    <section id="content">
+    </section>
+  </main>
+
+</body>
+
 </html>
