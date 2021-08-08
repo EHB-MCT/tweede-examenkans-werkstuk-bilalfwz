@@ -5,10 +5,20 @@ let baseUrl = "https://thecrew.cc/news/read.php";
 let articles;
 
 
+let key = document.getElementById("searchBar");
+
 window.onload = onLoad;
 
 
 const showContent = document.getElementsByClassName("showContent");
+
+
+key.onkeyup = search;
+
+
+function search() {
+    createHTML();
+}
 
 async function onLoad() {
 
@@ -28,57 +38,64 @@ async function sendRequest() {
 function createHTML() {
 
 
+    let value = key.value.toLowerCase();
 
     document.getElementById("content").innerHTML = '';
 
     for (let article of articles) {
 
 
+        let title = article.title.toLowerCase();
 
-        let div = document.createElement("div");
-        div.className = "articleClass";
-
-        let hTitle = document.createElement("h3");
-        hTitle.innerText = article.title;
-
-        let imageWrapper = document.createElement("div");
-        imageWrapper.classList.add("image_wrapper");
-
-        let img = document.createElement("img");
-        img.src = article.imageURI;
-        img.className = "showContent";
-        img.id = article.publicationDate;
-
-        let articleContentWrapper = document.createElement("div");
-        articleContentWrapper.classList.add("article_content_wrapper");
-
-        let hDiv = document.createElement("div");
-
-        let introtekst = document.createElement("div");
+        if (title.includes(value)) {
 
 
-        introtekst.id = "onderTitle" + article.publicationDate;
-        introtekst.className = "ondertitle";
-        introtekst.hidden = true;
+
+            let div = document.createElement("div");
+            div.className = "articleClass";
+
+            let hTitle = document.createElement("h3");
+            hTitle.innerText = article.title;
+
+            let imageWrapper = document.createElement("div");
+            imageWrapper.classList.add("image_wrapper");
+
+            let img = document.createElement("img");
+            img.src = article.imageURI;
+            img.className = "showContent";
+            img.id = article.publicationDate;
+
+            let articleContentWrapper = document.createElement("div");
+            articleContentWrapper.classList.add("article_content_wrapper");
+
+            let hDiv = document.createElement("div");
+
+            let introtekst = document.createElement("div");
 
 
-        introtekst.innerHTML = article.content;
-
-        let divPublishlikes = document.createElement("div");
-        divPublishlikes.classList.add("likes");
-        divPublishlikes.innerText = article.likes;
-        divPublishlikes.className = "likeDiv";
+            introtekst.id = "onderTitle" + article.publicationDate;
+            introtekst.className = "ondertitle";
+            introtekst.hidden = true;
 
 
-        divPublishlikes.id = article.UUID;
-        hDiv.appendChild(hTitle);
-        hDiv.appendChild(imageWrapper);
-        hDiv.appendChild(introtekst);
-        imageWrapper.appendChild(img);
-        articleContentWrapper.appendChild(hDiv);
-        articleContentWrapper.appendChild(divPublishlikes);
-        div.appendChild(articleContentWrapper);
-        document.getElementById("content").appendChild(div);
+            introtekst.innerHTML = article.content;
+
+            let divPublishlikes = document.createElement("div");
+            divPublishlikes.classList.add("likes");
+            divPublishlikes.innerText = article.likes;
+            divPublishlikes.className = "likeDiv";
+
+
+            divPublishlikes.id = article.UUID;
+            hDiv.appendChild(hTitle);
+            hDiv.appendChild(imageWrapper);
+            hDiv.appendChild(introtekst);
+            imageWrapper.appendChild(img);
+            articleContentWrapper.appendChild(hDiv);
+            articleContentWrapper.appendChild(divPublishlikes);
+            div.appendChild(articleContentWrapper);
+            document.getElementById("content").appendChild(div);
+        }
     }
 }
 for (const content of showContent) {
