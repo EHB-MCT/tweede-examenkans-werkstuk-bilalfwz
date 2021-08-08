@@ -8,6 +8,8 @@ let articles;
 window.onload = onLoad;
 
 
+const showContent = document.getElementsByClassName("showContent");
+
 async function onLoad() {
 
     let result = await sendRequest();
@@ -55,6 +57,9 @@ function createHTML() {
         let introtekst = document.createElement("div");
 
 
+        introtekst.id = "onderTitle" + article.publicationDate;
+        introtekst.className = "ondertitle";
+        introtekst.hidden = true;
 
 
         introtekst.innerHTML = article.content;
@@ -65,6 +70,7 @@ function createHTML() {
         divPublishlikes.className = "likeDiv";
 
 
+        divPublishlikes.id = article.UUID;
         hDiv.appendChild(hTitle);
         hDiv.appendChild(imageWrapper);
         hDiv.appendChild(introtekst);
@@ -74,4 +80,11 @@ function createHTML() {
         div.appendChild(articleContentWrapper);
         document.getElementById("content").appendChild(div);
     }
+}
+for (const content of showContent) {
+    content.addEventListener("click", function () {
+        console.log("onderTitle" + this.id);
+        let articleOndertitle = "onderTitle" + this.id;
+        document.getElementById(articleOndertitle).hidden = false;
+    });
 }
