@@ -3,17 +3,21 @@ body {
   padding: 20px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  color: #0d0d0d;
-}
-main {
-  margin: auto;
-  display: flex;
-}
-#container {
-  width: 100vw;
-  height:  100vh;
+
+
+img {
+
+  width: 40%;
 }
 
+.articleClass {
+
+  margin: 50px;
+
+}
+
+.likeDiv {
+  cursor: pointer;
+  font-size: 2em;
+  font-weight: bold;
+}
