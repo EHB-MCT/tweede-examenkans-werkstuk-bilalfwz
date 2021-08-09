@@ -1,11 +1,18 @@
 "use strict";
 
+
 let baseUrl = "https://thecrew.cc/news/read.php";
 
 let articles;
 
 
 let key = document.getElementById("searchBar");
+
+
+let likesBtn = document.getElementsByClassName("likeDiv");
+
+
+
 
 window.onload = onLoad;
 
@@ -16,16 +23,21 @@ const showContent = document.getElementsByClassName("showContent");
 key.onkeyup = search;
 
 
+
+
+
+
 function search() {
     createHTML();
 }
+
 
 async function onLoad() {
 
     let result = await sendRequest();
     articles = result.news;
     console.log(articles);
-
+    //#2
     createHTML();
 }
 
@@ -35,10 +47,14 @@ async function sendRequest() {
 }
 
 
+
 function createHTML() {
 
 
+
+
     let value = key.value.toLowerCase();
+
 
     document.getElementById("content").innerHTML = '';
 
@@ -48,7 +64,6 @@ function createHTML() {
         let title = article.title.toLowerCase();
 
         if (title.includes(value)) {
-
 
 
             let div = document.createElement("div");
@@ -85,8 +100,8 @@ function createHTML() {
             divPublishlikes.innerText = article.likes;
             divPublishlikes.className = "likeDiv";
 
-
             divPublishlikes.id = article.UUID;
+
             hDiv.appendChild(hTitle);
             hDiv.appendChild(imageWrapper);
             hDiv.appendChild(introtekst);
@@ -97,11 +112,48 @@ function createHTML() {
             document.getElementById("content").appendChild(div);
         }
     }
+
+    for (const content of showContent) {
+        content.addEventListener("click", function () {
+            console.log("onderTitle" + this.id);
+            let articleOndertitle = "onderTitle" + this.id;
+            document.getElementById(articleOndertitle).hidden = false;
+        });
+    }
+
+
+    for (const likeBtn of likesBtn) {
+        likeBtn.addEventListener("click", function () {
+            console.log("ID " + this.id);
+            let id = this.id;
+            postRequest(id);
+        });
+    }
 }
-for (const content of showContent) {
-    content.addEventListener("click", function () {
-        console.log("onderTitle" + this.id);
-        let articleOndertitle = "onderTitle" + this.id;
-        document.getElementById(articleOndertitle).hidden = false;
-    });
+
+
+function updateLike() {
+    async function onLoad() {
+        let result = await sendRequest();
+        articles = result.news;
+
+    }
+}
+
+
+async function postRequest(id) {
+    fetch(`https://thecrew.cc/news/create.php`, {
+            method: 'POST',
+            body: JSON.stringify({
+                UUID: id
+            })
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            onLoad();
+        });
+
 }
