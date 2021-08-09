@@ -11,6 +11,8 @@ let key = document.getElementById("searchBar");
 
 let likesBtn = document.getElementsByClassName("likeDiv");
 
+let radioMostlike = document.getElementById("mostLike");
+let radioMinlike = document.getElementById("minLike");
 
 
 
@@ -23,6 +25,33 @@ const showContent = document.getElementsByClassName("showContent");
 key.onkeyup = search;
 
 
+radioMostlike.onclick = likeFilter;
+radioMinlike.onclick = minFilter;
+
+
+function likeFilter() {
+
+
+    articles.sort(
+        function (a, b) {
+            return b.likes - a.likes;
+        }
+    );
+
+    createHTML();
+}
+
+function minFilter() {
+
+
+    articles.sort(
+        function (a, b) {
+            return a.likes - b.likes;
+        }
+    );
+
+    createHTML();
+}
 
 
 
