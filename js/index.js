@@ -37,7 +37,7 @@ async function onLoad() {
     let result = await sendRequest();
     articles = result.news;
     console.log(articles);
-    //#2
+
     createHTML();
 }
 
