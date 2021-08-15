@@ -1,16 +1,20 @@
 "use strict";
 
+///////////Globale variabels///////////////
 
+//Get url
 let baseUrl = "https://thecrew.cc/news/read.php";
 
+//All articles
 let articles;
 
-
+//Key button
 let key = document.getElementById("searchBar");
 
-
+//Likes buttons
 let likesBtn = document.getElementsByClassName("likeDiv");
 
+//radioButtons
 let radioMostlike = document.getElementById("mostLike");
 let radioMinlike = document.getElementById("minLike");
 
@@ -18,17 +22,17 @@ let radioMinlike = document.getElementById("minLike");
 
 window.onload = onLoad;
 
-
+//showDescription
 const showContent = document.getElementsByClassName("showContent");
 
+//searchBar action
+key.onkeyup = createHTML;
 
-key.onkeyup = search;
-
-
+//radioButtons action
 radioMostlike.onclick = likeFilter;
 radioMinlike.onclick = minFilter;
 
-
+//FilterMostlike
 function likeFilter() {
 
 
@@ -41,6 +45,7 @@ function likeFilter() {
     createHTML();
 }
 
+//FilterMinlike
 function minFilter() {
 
 
@@ -54,13 +59,7 @@ function minFilter() {
 }
 
 
-
-
-function search() {
-    createHTML();
-}
-
-
+//Toon alle artikelen wanneer de pagina wordt geladen
 async function onLoad() {
 
     let result = await sendRequest();
@@ -70,30 +69,34 @@ async function onLoad() {
     createHTML();
 }
 
+//Request doorsturen naar URL
 async function sendRequest() {
     let result = await fetch(baseUrl);
     return result.json();
 }
 
 
-
+//Artikels in de HTML tonen en bewerken 
 function createHTML() {
 
 
 
-
+    //searchBar value to LowerCase
     let value = key.value.toLowerCase();
 
-
+    //Get div#content
     document.getElementById("content").innerHTML = '';
 
+    //Artikels loop 
     for (let article of articles) {
 
-
+        //titel to lowerCase
         let title = article.title.toLowerCase();
 
+        //searchBar filter
         if (title.includes(value)) {
 
+            /////Artikels in HTML bewerken/////
 
             let div = document.createElement("div");
             div.className = "articleClass";
@@ -141,7 +144,7 @@ function createHTML() {
             document.getElementById("content").appendChild(div);
         }
     }
-
+    //Show Subtitels
     for (const content of showContent) {
         content.addEventListener("click", function () {
             console.log("onderTitle" + this.id);
@@ -150,7 +153,7 @@ function createHTML() {
         });
     }
 
-
+    //Like toevoegen
     for (const likeBtn of likesBtn) {
         likeBtn.addEventListener("click", function () {
             console.log("ID " + this.id);
@@ -160,7 +163,7 @@ function createHTML() {
     }
 }
 
-
+// likes herladen
 function updateLike() {
     async function onLoad() {
         let result = await sendRequest();
@@ -169,7 +172,7 @@ function updateLike() {
     }
 }
 
-
+//Send PostRequest to URL
 async function postRequest(id) {
     fetch(`https://thecrew.cc/news/create.php`, {
             method: 'POST',
